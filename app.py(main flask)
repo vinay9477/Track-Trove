@@ -1,0 +1,43 @@
+from flask import Flask, render_template, request, redirect, url_for
+from pymongo import MongoClient
+import datetime
+
+app = Flask(__name__)
+client = MongoClient("mongodb://localhost:27017/")
+db = client.tracktrove
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/inventory', methods=['GET', 'POST'])
+def inventory():
+    if request.method == 'POST':
+        item = {
+            'name': request.form['name'],
+            'quantity': int(request.form['quantity'])
+        }
+        db.inventory.insert_one(item)
+        return redirect(url_for('inventory'))
+    items = db.inventory.find()
+    return render_template('inventory.html', items=items)
+
+@app.route('/sales', methods=['GET', 'POST'])
+def sales():
+    if request.method == 'POST':
+        sale = {
+            'product': request.form['product'],
+            'amount': float(request.form['amount']),
+            'date': datetime.datetime.now()
+        }
+        db.sales.insert_one(sale)
+        return redirect(url_for('sales'))
+    return render_template('sales.html')
+
+@app.route('/dashboard')
+def dashboard():
+    sales = list(db.sales.find())
+    return render_template('dashboard.html', sales=sales)
+
+if __name__ == '__main__':
+    app.run(debug=True)
