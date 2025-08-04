@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Inventory</h2>
+<form method="post" class="mb-3">
+    <input name="name" placeholder="Item name" class="form-control mb-2" required>
+    <input name="quantity" type="number" placeholder="Quantity" class="form-control mb-2" required>
+    <button class="btn btn-primary">Add Item</button>
+</form>
+<ul class="list-group">
+    {% for item in items %}
+    <li class="list-group-item">{{ item.name }} - Quantity: {{ item.quantity }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
