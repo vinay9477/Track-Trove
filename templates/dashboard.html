@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Sales Dashboard</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Product</th><th>Amount</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+        {% for s in sales %}
+        <tr>
+            <td>{{ s.product }}</td>
+            <td>₹ {{ s.amount }}</td>
+            <td>{{ s.date.strftime('%Y-%m-%d %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
