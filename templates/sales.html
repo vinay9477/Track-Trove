@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Sales</h2>
+<form method="post">
+    <input name="product" placeholder="Product name" class="form-control mb-2" required>
+    <input name="amount" type="number" placeholder="Amount" class="form-control mb-2" required>
+    <button class="btn btn-success">Record Sale</button>
+</form>
+{% endblock %}
